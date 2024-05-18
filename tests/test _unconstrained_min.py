@@ -5,7 +5,7 @@ from src.unconstrained_min import UnconstrainedMinimization
 from src.utils import plot_contour_lines, plot_function_values
 
 class TestUnconstrainedMinimization(unittest.TestCase):
-    def _run_test(self, example, title, x0 = [1.0,1.0], x_lim = [-2.0,2.0], y_lim=[-2.0,2.0], max_iter=100):
+    def _run_test(self, example, title, x0 = np.array([1.0,1.0]), x_lim = [-2.0,2.0], y_lim=[-2.0,2.0], max_iter=100):
         f, grad_f, hessian_f = example(True)
         
         gradient_descent = UnconstrainedMinimization(f, grad_f, method='gradient_descent', max_iter=max_iter)
@@ -32,7 +32,7 @@ class TestUnconstrainedMinimization(unittest.TestCase):
         self._run_test(examples.quadratic_example_3, title="Quadratic Example 3 Contour Plot")
 
     def test_rosenbrock_function(self):
-        self._run_test(examples.rosenbrock_function, x0=[-1.0, 2.0], title="Rosenbrock Function Contour Plot", x_lim=[-2.0,2.0], y_lim=[-2.0,5.0], max_iter=10000)
+        self._run_test(examples.rosenbrock_function, x0=np.array([-1.0,2.0]), title="Rosenbrock Function Contour Plot", x_lim=[-2.0,2.0], y_lim=[-2.0,5.0], max_iter=10000)
 
     def test_linear_function(self):
         self._run_test(examples.linear_function, title="Linear Function Contour Plot")
