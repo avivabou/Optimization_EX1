@@ -2,7 +2,7 @@ import numpy as np
 from scipy.optimize import line_search
 
 class UnconstrainedMinimization:
-    def __init__(self,f, grad_f, hessian_f=None, method='gradient_descent', max_iter=1000, obj_tol=10**-12, param_tol=10**-8):
+    def __init__(self,f, grad_f, hessian_f=None, method='gradient_descent', max_iter=100, obj_tol=10**-12, param_tol=10**-8):
         self.method = method
         self.max_iter = max_iter
         self.obj_tol = obj_tol
