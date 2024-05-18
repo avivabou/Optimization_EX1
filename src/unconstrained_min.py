@@ -36,14 +36,14 @@ class UnconstrainedMinimization:
             if self.method == 'newton':
                 if self.hessian_f is None:
                     print("Terminating due to non hessian matrix for newton")
-                    return x, f_evaluation, False
+                    return i, x, False
                 gradient_direction = np.linalg.solve(self.hessian_f(x), gradient_direction)
                 
             step_size = self.wolfe_condition(x, f_evaluation, gradient_direction)
 
             # Stop iterating when step size is not defined
             if step_size == None:
-                return x, f_evaluation, True
+                return i, x, True
 
             # Caculate next X and it's evaluation
             next_x = x + step_size * gradient_direction
@@ -51,14 +51,16 @@ class UnconstrainedMinimization:
 
             if np.abs(next_f) == np.inf:
                 print("Terminating iteration due to inf value in f(x)")
-                return next_x, next_f, False 
+                return i, x, False 
             
             if np.any(np.isnan(next_x)):
                 print("Iteration {}: x = {}, f(x) = {}".format(i, next_x, next_f))
                 print("Terminating iteration due to NaN value in x")
-                return next_x, next_f, False 
+                return i, x, False 
             
             if np.linalg.norm(next_x - x) < self.param_tol or np.abs(next_f - f_evaluation) < self.obj_tol:
-                return next_x, next_f, True
+                return i, x, True
             
             x = next_x
+
+        return i, x, False
