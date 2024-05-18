@@ -1,7 +1,19 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+
+SAVE_DIR = './saves/'
+
+def save_plot(title):
+    SAVE_PATH = os.path.join(SAVE_DIR, title)
+
+    if not os.path.exists(SAVE_DIR):
+        os.makedirs(SAVE_DIR)
+
+    plt.savefig(SAVE_PATH)
 
 def plot_contour_lines(f, title, paths, x_lim, y_lim):
+    title = title + " Contour Plot"
     X = np.linspace(x_lim[0], x_lim[1])
     Y = np.linspace(y_lim[0], y_lim[1])
     X, Y = np.meshgrid(X,Y)
@@ -24,10 +36,12 @@ def plot_contour_lines(f, title, paths, x_lim, y_lim):
             
     
     plt.legend()
+    save_plot(title)
     plt.show()
 
 
-def plot_function_values(paths, title):
+def plot_function_values(paths, title,):
+    title = title + " Minimization Iterations"
     fig, ax = plt.subplots(1, 1)
     for path, color in zip(paths, ['red', 'blue', 'green', 'orange']):
         x = np.linspace(0, len(path[0])-1, len(path[0]))
@@ -36,4 +50,5 @@ def plot_function_values(paths, title):
     ax.set_xlabel('Iterations')
     ax.set_ylabel('Function values')
     plt.legend()
+    save_plot(title)
     plt.show()
